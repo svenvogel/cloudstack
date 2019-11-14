@@ -1761,12 +1761,12 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
             conn = LibvirtConnection.getConnectionByVmName(routerName);
             final IpAddressTO[] ips = cmd.getIpAddresses();
             Integer devNum = 0;
-	    final Map<String, Integer> broadcastUriToNicNum = new HashMap<String, Integer>();
+            final Map<String, Integer> broadcastUriToNicNum = new HashMap<String, Integer>();
             final List<InterfaceDef> pluggedNics = getInterfaces(conn, routerName);
 
             for (final InterfaceDef pluggedNic : pluggedNics) {
                 final String pluggedVlan = pluggedNic.getBrName();
-		if (pluggedVlan.equalsIgnoreCase(_linkLocalBridgeName)) {
+                if (pluggedVlan.equalsIgnoreCase(_linkLocalBridgeName)) {
                     broadcastUriToNicNum.put("LinkLocal", devNum);
                 } else if (pluggedVlan.equalsIgnoreCase(_publicBridgeName) || pluggedVlan.equalsIgnoreCase(_privBridgeName) ||
                         pluggedVlan.equalsIgnoreCase(_guestBridgeName)) {
@@ -1778,7 +1778,7 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
             }
 
             for (final IpAddressTO ip : ips) {
-		ip.setNicDevId(broadcastUriToNicNum.get(ip.getBroadcastUri()));
+                ip.setNicDevId(broadcastUriToNicNum.get(ip.getBroadcastUri()));
             }
 
             return new ExecutionResult(true, null);
