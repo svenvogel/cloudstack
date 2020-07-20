@@ -114,7 +114,7 @@ public class IscsiStorageCleanupMonitor implements Runnable{
 
                     //check the volume map. If an entry exists change the status to True
                     for (final LibvirtVMDef.DiskDef disk : disks) {
-                        if (diskStatusMap.containsKey(disk.getDiskPath())) {
+                        if (diskStatusMap.containsKey(disk.getDiskPath())&&!disk.getDiskPath().contains("part")) {
                             diskStatusMap.put(disk.getDiskPath(), true);
                             s_logger.debug("active disk found by cleanup thread" + disk.getDiskPath());
                         }
