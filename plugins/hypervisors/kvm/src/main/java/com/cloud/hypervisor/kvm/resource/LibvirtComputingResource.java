@@ -1156,14 +1156,14 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
         storageProcessor.configure(name, params);
         storageHandler = new StorageSubsystemCommandHandlerBase(storageProcessor);
 
-        boolean _iscsiCleanUpEnabled = (boolean)params.get("iscsi.session.cleanup.enabled");
+        Boolean _iscsiCleanUpEnabled = Boolean.parseBoolean((String)params.get("iscsi.session.cleanup.enabled"));
 
-        if (_iscsiCleanUpEnabled) {
+        if (BooleanUtils.isTrue(_iscsiCleanUpEnabled)) {
             IscsiStorageCleanupMonitor isciCleanupMonitor = new IscsiStorageCleanupMonitor();
             final Thread cleanupMonitor = new Thread(isciCleanupMonitor);
             cleanupMonitor.start();
         } else {
-            s_logger.info("iscsi session clean up is disabled")
+            s_logger.info("iscsi session clean up is disabled");
         }
 
         return true;
